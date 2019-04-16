@@ -266,7 +266,7 @@ paths:
     description: returns the list of vehicles that are linked to this account
     get:
       tags: 
-        - list
+        - Vehicles
       summary: get the list of vehicles
       description: the full list of vehicles linked to this account
       operationId: getVehicles
@@ -295,7 +295,7 @@ paths:
       - $ref: '#/components/parameters/vehicleIdParam'
     get:
       tags: 
-        - CRUD
+        - Vehicles
       summary: a single vehicles
       description: returns the information of a single vehicle
       operationId: getVehicleByVehicleID
@@ -310,7 +310,7 @@ paths:
       deprecated: false
     put: 
       tags: 
-        - CRUD
+        - Vehicles
       summary: update a vehicle
       description: Updates a single vehicle
       operationId: updateVehicleByVehicleID
@@ -325,7 +325,7 @@ paths:
       deprecated: false
     delete:
       tags: 
-        - CRUD
+        - Vehicles
       summary: delete a vehicle
       description: deletes a single vehicle
       operationId: deleteVehicleByVehicleID
@@ -343,7 +343,7 @@ paths:
     description: returns the list of drivers that are linked to this account
     get:
       tags: 
-        - list
+        - Drivers
       summary: get the list of drivers
       description: the full list of drivers linked to this account
       operationId: getDrivers
@@ -365,7 +365,7 @@ paths:
       - $ref: '#/components/parameters/driverIdParam'
     get:
       tags: 
-        - CRUD
+        - Drivers
       summary: return one driver
       description: returns the information of a single driver
       operationId: getDriverByDriverID
@@ -380,7 +380,7 @@ paths:
       deprecated: false
     put: 
       tags: 
-        - CRUD
+        - Drivers
       summary: update a driver
       description: Updates a single driver
       operationId: updateDriverByDriverID
@@ -395,7 +395,7 @@ paths:
       deprecated: false
     delete:
       tags: 
-        - CRUD
+        - Drivers
       summary: delete a driver
       description: deletes a single driver
       operationId: deleteDriverByDriverID
@@ -413,7 +413,7 @@ paths:
     description: returns the list of trailers that are linked to this account
     get:
       tags: 
-        - list
+        - Trailers
       summary: get the list of trailers
       description: the full list of trailers linked to this account
       operationId: getTrailers
@@ -435,7 +435,7 @@ paths:
       - $ref: '#/components/parameters/trailerIdParam'
     get:
       tags: 
-        - CRUD
+        - Trailers
       summary: return one trailer
       description: returns the information of a single trailer
       operationId: getTrailerByTrailerID
@@ -450,7 +450,7 @@ paths:
       deprecated: false
     put: 
       tags: 
-        - CRUD
+        - Trailers
       summary: update a trailer
       description: Updates a single trailer
       operationId: updateTrailerByTrailerID
@@ -465,7 +465,7 @@ paths:
       deprecated: false
     delete:
       tags: 
-        - CRUD
+        - Trailers
       summary: delete a trailer
       description: deletes a single trailer
       operationId: deleteTrailerByTrailerID
@@ -488,7 +488,7 @@ paths:
       - $ref: '#/components/parameters/sensorParam'
     get:
       tags: 
-        - history
+        - Vehicles
       summary: historical vehicle data
       description: search throught the historical data of a vehicle based on his vehicleID, add parameters to include extra sensor information
       operationId: getHistoricalVehicleData
@@ -518,7 +518,7 @@ paths:
       - $ref: '#/components/parameters/sensorParam'
     get:
       tags: 
-        - history
+        - Trailers
       summary: historical trailer data
       description: search throught the historical data of a trailer based on his trailerID, add parameters to include extra sensor information
       operationId: getHistoricalTrailerData
@@ -547,7 +547,7 @@ paths:
       - $ref: '#/components/parameters/sensorParam'
     get:
       tags: 
-        - state
+        - Vehicles
       summary: current vehicle state
       description: get the current vehicle information like(postions, mileage, sensors) of a vehicle based on his vehicleID, add parameters to include extra sensor information
       operationId: getVehicleState
@@ -574,7 +574,7 @@ paths:
       - $ref: '#/components/parameters/sensorParam'
     get:
       tags: 
-        - state
+        - Trailers
       summary: current trailer state
       description: get the current trailer information like(postions, mileage, sensors) of a trailer based on his trailerID, add parameters to include extra sensor information
       operationId: getTrailerState
@@ -603,7 +603,7 @@ paths:
       - $ref: '#/components/parameters/sensorParam'    
     get:
       tags:
-        - events
+        - Vehicles
       summary: get the vehicle events
       description: get a historic overview of the vehicle events like alarms, planning feedback or tacho state changes of a vehicle based on his vehicleID
       operationId: getVehicleEvents
@@ -634,7 +634,7 @@ paths:
       - $ref: '#/components/parameters/sensorParam'    
     get:
       tags:
-        - events
+        - Trailers
       summary: get the trailer events
       description: get a historic overview of the trailer events like alarms, planning feedback or tacho state changes of a trailer based on his trailerID
       operationId: getTrailerEvents
