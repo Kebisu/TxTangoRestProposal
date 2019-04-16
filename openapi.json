@@ -1,1 +1,674 @@
-{"swagger":"2.0","info":{"description":"This is a demo of [LucyBot's API Documentation](http://lucybot.com) using swagger.io's Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\n\nTo use this documentation for your own API, visit [http://lucybot.com](http://lucybot.com)","version":"1.0.0","title":"Swagger Petstore","termsOfService":"http://swagger.io/terms/","contact":{"email":"apiteam@swagger.io"},"license":{"name":"Apache 2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.html"}},"host":"petstore.swagger.io","basePath":"/v2","tags":[{"name":"pet","description":"Everything about your Pets","externalDocs":{"description":"Find out more","url":"http://swagger.io"}},{"name":"store","description":"Access to Petstore orders"},{"name":"user","description":"Operations about user","externalDocs":{"description":"Find out more about our store","url":"http://swagger.io"}}],"schemes":["http"],"paths":{"/pet":{"post":{"tags":["pet"],"summary":"Add a new pet to the store","description":"","operationId":"addPet","consumes":["application/json","application/xml"],"produces":["application/xml","application/json"],"parameters":[{"in":"body","name":"body","description":"Pet object that needs to be added to the store","required":true,"schema":{"$ref":"#/definitions/Pet"}}],"responses":{"405":{"description":"Invalid input"}},"security":[{"petstore_auth":["write:pets","read:pets"]}]},"put":{"tags":["pet"],"summary":"Update an existing pet","description":"","operationId":"updatePet","consumes":["application/json","application/xml"],"produces":["application/xml","application/json"],"parameters":[{"in":"body","name":"body","description":"Pet object that needs to be added to the store","required":true,"schema":{"$ref":"#/definitions/Pet"}}],"responses":{"400":{"description":"Invalid ID supplied"},"404":{"description":"Pet not found"},"405":{"description":"Validation exception"}},"security":[{"petstore_auth":["write:pets","read:pets"]}]}},"/pet/findByStatus":{"get":{"tags":["pet"],"summary":"Finds Pets by status","description":"Multiple status values can be provided with comma separated strings","operationId":"findPetsByStatus","produces":["application/xml","application/json"],"parameters":[{"name":"status","in":"query","description":"Status values that need to be considered for filter","required":true,"type":"array","items":{"type":"string","enum":["available","pending","sold"],"default":"available"},"collectionFormat":"multi"}],"responses":{"200":{"description":"successful operation","schema":{"type":"array","items":{"$ref":"#/definitions/Pet"}}},"400":{"description":"Invalid status value"}},"security":[{"petstore_auth":["write:pets","read:pets"]}]}},"/pet/findByTags":{"get":{"tags":["pet"],"summary":"Finds Pets by tags","description":"Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.","operationId":"findPetsByTags","produces":["application/xml","application/json"],"parameters":[{"name":"tags","in":"query","description":"Tags to filter by","required":true,"type":"array","items":{"type":"string"},"collectionFormat":"multi"}],"responses":{"200":{"description":"successful operation","schema":{"type":"array","items":{"$ref":"#/definitions/Pet"}}},"400":{"description":"Invalid tag value"}},"security":[{"petstore_auth":["write:pets","read:pets"]}],"deprecated":true}},"/pet/{petId}":{"get":{"tags":["pet"],"summary":"Find pet by ID","description":"Returns a single pet","operationId":"getPetById","produces":["application/xml","application/json"],"parameters":[{"name":"petId","in":"path","description":"ID of pet to return","required":true,"type":"integer","format":"int64"}],"responses":{"200":{"description":"successful operation","schema":{"$ref":"#/definitions/Pet"}},"400":{"description":"Invalid ID supplied"},"404":{"description":"Pet not found"}},"security":[{"api_key":[]}]},"post":{"tags":["pet"],"summary":"Updates a pet in the store with form data","description":"","operationId":"updatePetWithForm","consumes":["application/x-www-form-urlencoded"],"produces":["application/xml","application/json"],"parameters":[{"name":"petId","in":"path","description":"ID of pet that needs to be updated","required":true,"type":"integer","format":"int64"},{"name":"name","in":"formData","description":"Updated name of the pet","required":false,"type":"string"},{"name":"status","in":"formData","description":"Updated status of the pet","required":false,"type":"string"}],"responses":{"405":{"description":"Invalid input"}},"security":[{"petstore_auth":["write:pets","read:pets"]}]},"delete":{"tags":["pet"],"summary":"Deletes a pet","description":"","operationId":"deletePet","produces":["application/xml","application/json"],"parameters":[{"name":"api_key","in":"header","required":false,"type":"string"},{"name":"petId","in":"path","description":"Pet id to delete","required":true,"type":"integer","format":"int64"}],"responses":{"400":{"description":"Invalid ID supplied"},"404":{"description":"Pet not found"}},"security":[{"petstore_auth":["write:pets","read:pets"]}]}},"/pet/{petId}/uploadImage":{"post":{"tags":["pet"],"summary":"uploads an image","description":"","operationId":"uploadFile","consumes":["multipart/form-data"],"produces":["application/json"],"parameters":[{"name":"petId","in":"path","description":"ID of pet to update","required":true,"type":"integer","format":"int64"},{"name":"additionalMetadata","in":"formData","description":"Additional data to pass to server","required":false,"type":"string"},{"name":"file","in":"formData","description":"file to upload","required":false,"type":"file"}],"responses":{"200":{"description":"successful operation","schema":{"$ref":"#/definitions/ApiResponse"}}},"security":[{"petstore_auth":["write:pets","read:pets"]}]}},"/store/inventory":{"get":{"tags":["store"],"summary":"Returns pet inventories by status","description":"Returns a map of status codes to quantities","operationId":"getInventory","produces":["application/json"],"parameters":[],"responses":{"200":{"description":"successful operation","schema":{"type":"object","additionalProperties":{"type":"integer","format":"int32"}}}},"security":[{"api_key":[]}]}},"/store/order":{"post":{"tags":["store"],"summary":"Place an order for a pet","description":"","operationId":"placeOrder","produces":["application/xml","application/json"],"parameters":[{"in":"body","name":"body","description":"order placed for purchasing the pet","required":true,"schema":{"$ref":"#/definitions/Order"}}],"responses":{"200":{"description":"successful operation","schema":{"$ref":"#/definitions/Order"}},"400":{"description":"Invalid Order"}}}},"/store/order/{orderId}":{"get":{"tags":["store"],"summary":"Find purchase order by ID","description":"For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions","operationId":"getOrderById","produces":["application/xml","application/json"],"parameters":[{"name":"orderId","in":"path","description":"ID of pet that needs to be fetched","required":true,"type":"integer","maximum":10.0,"minimum":1.0,"format":"int64"}],"responses":{"200":{"description":"successful operation","schema":{"$ref":"#/definitions/Order"}},"400":{"description":"Invalid ID supplied"},"404":{"description":"Order not found"}}},"delete":{"tags":["store"],"summary":"Delete purchase order by ID","description":"For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors","operationId":"deleteOrder","produces":["application/xml","application/json"],"parameters":[{"name":"orderId","in":"path","description":"ID of the order that needs to be deleted","required":true,"type":"integer","minimum":1.0,"format":"int64"}],"responses":{"400":{"description":"Invalid ID supplied"},"404":{"description":"Order not found"}}}},"/user":{"post":{"tags":["user"],"summary":"Create user","description":"This can only be done by the logged in user.","operationId":"createUser","produces":["application/xml","application/json"],"parameters":[{"in":"body","name":"body","description":"Created user object","required":true,"schema":{"$ref":"#/definitions/User"}}],"responses":{"default":{"description":"successful operation"}}}},"/user/createWithArray":{"post":{"tags":["user"],"summary":"Creates list of users with given input array","description":"","operationId":"createUsersWithArrayInput","produces":["application/xml","application/json"],"parameters":[{"in":"body","name":"body","description":"List of user object","required":true,"schema":{"type":"array","items":{"$ref":"#/definitions/User"}}}],"responses":{"default":{"description":"successful operation"}}}},"/user/createWithList":{"post":{"tags":["user"],"summary":"Creates list of users with given input array","description":"","operationId":"createUsersWithListInput","produces":["application/xml","application/json"],"parameters":[{"in":"body","name":"body","description":"List of user object","required":true,"schema":{"type":"array","items":{"$ref":"#/definitions/User"}}}],"responses":{"default":{"description":"successful operation"}}}},"/user/login":{"get":{"tags":["user"],"summary":"Logs user into the system","description":"","operationId":"loginUser","produces":["application/xml","application/json"],"parameters":[{"name":"username","in":"query","description":"The user name for login","required":true,"type":"string"},{"name":"password","in":"query","description":"The password for login in clear text","required":true,"type":"string"}],"responses":{"200":{"description":"successful operation","schema":{"type":"string"},"headers":{"X-Rate-Limit":{"type":"integer","format":"int32","description":"calls per hour allowed by the user"},"X-Expires-After":{"type":"string","format":"date-time","description":"date in UTC when token expires"}}},"400":{"description":"Invalid username/password supplied"}}}},"/user/logout":{"get":{"tags":["user"],"summary":"Logs out current logged in user session","description":"","operationId":"logoutUser","produces":["application/xml","application/json"],"parameters":[],"responses":{"default":{"description":"successful operation"}}}},"/user/{username}":{"get":{"tags":["user"],"summary":"Get user by user name","description":"","operationId":"getUserByName","produces":["application/xml","application/json"],"parameters":[{"name":"username","in":"path","description":"The name that needs to be fetched. Use user1 for testing. ","required":true,"type":"string"}],"responses":{"200":{"description":"successful operation","schema":{"$ref":"#/definitions/User"}},"400":{"description":"Invalid username supplied"},"404":{"description":"User not found"}}},"put":{"tags":["user"],"summary":"Updated user","description":"This can only be done by the logged in user.","operationId":"updateUser","produces":["application/xml","application/json"],"parameters":[{"name":"username","in":"path","description":"name that need to be updated","required":true,"type":"string"},{"in":"body","name":"body","description":"Updated user object","required":true,"schema":{"$ref":"#/definitions/User"}}],"responses":{"400":{"description":"Invalid user supplied"},"404":{"description":"User not found"}}},"delete":{"tags":["user"],"summary":"Delete user","description":"This can only be done by the logged in user.","operationId":"deleteUser","produces":["application/xml","application/json"],"parameters":[{"name":"username","in":"path","description":"The name that needs to be deleted","required":true,"type":"string"}],"responses":{"400":{"description":"Invalid username supplied"},"404":{"description":"User not found"}}}}},"securityDefinitions":{"petstore_auth":{"type":"oauth2","authorizationUrl":"http://petstore.swagger.io/oauth/dialog","flow":"implicit","scopes":{"write:pets":"modify pets in your account","read:pets":"read your pets"}},"api_key":{"type":"apiKey","name":"api_key","in":"header"}},"definitions":{"Order":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"petId":{"type":"integer","format":"int64"},"quantity":{"type":"integer","format":"int32"},"shipDate":{"type":"string","format":"date-time"},"status":{"type":"string","description":"Order Status","enum":["placed","approved","delivered"]},"complete":{"type":"boolean","default":false}},"xml":{"name":"Order"}},"Category":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"}},"xml":{"name":"Category"}},"User":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"username":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"email":{"type":"string"},"password":{"type":"string"},"phone":{"type":"string"},"userStatus":{"type":"integer","format":"int32","description":"User Status"}},"xml":{"name":"User"}},"Tag":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"}},"xml":{"name":"Tag"}},"Pet":{"type":"object","required":["name","photoUrls"],"properties":{"id":{"type":"integer","format":"int64"},"category":{"$ref":"#/definitions/Category"},"name":{"type":"string","example":"doggie"},"photoUrls":{"type":"array","xml":{"name":"photoUrl","wrapped":true},"items":{"type":"string"}},"tags":{"type":"array","xml":{"name":"tag","wrapped":true},"items":{"$ref":"#/definitions/Tag"}},"status":{"type":"string","description":"pet status in the store","enum":["available","pending","sold"]}},"xml":{"name":"Pet"}},"ApiResponse":{"type":"object","properties":{"code":{"type":"integer","format":"int32"},"type":{"type":"string"},"message":{"type":"string"}}}},"externalDocs":{"description":"Find out more about Swagger","url":"http://swagger.io"}}
+openapi: 3.0.0
+info:
+  title: TX-TANGO REST 
+  description: Transics Integration web services
+  contact: {}
+  version: '0.1'
+servers:
+- url: https://ft.tx-connect.com/IWS_ASMX/Service.asmx
+  description: The *fieldtest* environment of the SOAP web services
+  variables: {}
+components:
+  schemas:
+    Error:
+      type: object
+      required: 
+      - code
+      - description
+      properties:
+        code: 
+          type: string
+          description: code of the error, if you do not manage to solve it, please provide your request with this error code to our service desk
+        description:
+          type: string
+          description: description of the error, to help you solve it
+    
+    Vehicle:
+      type: object
+      required:
+      - vehicleID
+      properties:
+        vehicleID: 
+          type: string
+          description: alfanumeric id of the the vehicle
+        licensePlate:
+          type: string
+    
+    Driver:
+      type: object
+      required:
+      - driverID
+      properties:
+        driverID: 
+          type: string
+          description: alfanumeric id of the driver
+        lastname:
+          type: string
+        firstname:
+          type: string
+        tachocardID:
+          type: string
+          description: tachocard ID that the driver is using to register his driving times
+        tachocardCountryOfIssue:
+          type: string
+          description: The tachocardCountryOfIssue parameter is an ISO 3166-1 alpha-3 country code.
+    
+    Trailer:
+      type: object
+      required:
+      - trailerID
+      properties:
+        trailerID: 
+          type: string
+        licensePlate:
+          type: string 
+    
+    HistoryItem:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        linkedResources:
+          type: array
+          items:
+            type: object
+            properties:
+              vehicleID:
+                type: string
+              driverID:
+                type: string
+              trailerID:
+                type: string
+        position:
+          $ref: "#/components/schemas/Position"
+        sensors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sensor"
+         
+    State:
+      type: object
+      properties:
+        lastCommunicationTimestamp:
+          type: string
+          format: date-time
+        linkedResources:
+          type: array
+          items:
+            type: object
+            properties:
+              vehicleID:
+                type: string
+              driverID:
+                type: string
+              trailerID:
+                type: string
+        currentActivity:
+          type: object
+          properties:
+            activityID:
+              type: integer
+            activityStartDate:
+              type: string
+              format: date-time
+        position:
+          allOf:
+            - $ref: "#/components/schemas/Position"
+            - type: object
+              properties:
+                positionTimestamp:
+                  type: string
+                  format: date-time 
+        sensors:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Sensor"
+              - type: object
+                properties:
+                  sensorTimestamp:
+                    type: string
+                    format: date-time 
+        eta:
+          type: object
+          properties:
+            name:
+              type: string
+            currentEta:
+              type: string
+              format: date-time
+            calculationAtTimeStamp:
+              type: string
+              format: date-time
+        
+    Position:
+      type: object
+      required:
+      - latitude
+      - longitude
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        mileage:
+          type: integer
+        heading:
+          type: number
+          format: double
+        speed: 
+          type: number
+          format: double
+        elevation:
+          type: number
+          format: double
+        address:
+          type: string
+    
+    Sensor:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+          
+    Event:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        linkedResources:
+          type: array
+          items:
+            type: object
+            properties:
+              vehicleID:
+                type: string
+              driverID:
+                type: string
+              trailerID:
+                type: string
+        eventType:
+          type: string
+          enum: [alarm, tacho, planning]
+        eventText:
+          type: string
+        eventProperties:
+          type: object
+          minProperties: 0
+          maxProperties: 10
+        position:
+          $ref: "#/components/schemas/Position"
+          
+  parameters:
+    vehicleIdParam:
+      name: vehicleID
+      in: path
+      required: true
+      description: alphanumeric ID of a vehicle
+      schema:
+        type: string
+        minimum: 1
+    driverIdParam:
+      name: driverID
+      in: path
+      required: true
+      description: alphanumeric ID of a driver
+      schema:
+        type: string
+        minimum: 1
+    trailerIdParam:
+      name: trailerID
+      in: path
+      required: true
+      description: alphanumeric ID of a trailer
+      schema:
+        type: string
+        minimum: 1
+    fromParam:
+      name: from
+      in: query
+      required: true
+      description: start date when selecting
+      schema:
+        type: string
+        format: date-time
+        minimum: 1
+    untilParam:
+      name: until
+      in: query
+      required: true
+      description: start date when selecting
+      schema:
+        type: string
+        format: date-time
+        minimum: 1
+    sensorParam:
+      name: sensors
+      in: query
+      required: false
+      description: add sensors to the response of this web service
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+paths:
+  /vehicles:
+    summary: list of vehicles
+    description: returns the list of vehicles that are linked to this account
+    get:
+      tags: 
+        - vehicles
+        - list
+      summary: get the list of vehicles
+      description: the full list of vehicles linked to this account
+      operationId: getVehicles
+      parameters: 
+        - name: filterByLicensePlate
+          in: query
+          required: false
+          description: license plate of a vehicle
+          schema:
+            type: string
+      responses:
+        '200':
+          description: list of vehicles
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+      deprecated: false
+  /vehicles/{vehicleID}:
+    summary: represents a vehicle
+    description: a vehicle is represented by his vehicleID
+    parameters:
+      - $ref: '#/components/parameters/vehicleIdParam'
+    get:
+      tags: 
+        - vehicles
+        - CRUD
+      summary: a single vehicles
+      description: returns the information of a single vehicle
+      operationId: getVehicleByVehicleID
+      responses:
+        '200':
+          description: A vehicle object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+      deprecated: false
+    put: 
+      tags: 
+        - vehicles
+        - CRUD
+      summary: update a vehicle
+      description: Updates a single vehicle
+      operationId: updateVehicleByVehicleID
+      responses:
+        '200':
+          description: A vehicle object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+      deprecated: false
+    delete:
+      tags: 
+        - vehicles
+        - CRUD
+      summary: delete a vehicle
+      description: deletes a single vehicle
+      operationId: deleteVehicleByVehicleID
+      responses:
+        '200':
+          description: A vehicle object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+      deprecated: false
+  /drivers:
+    summary: list of drivers
+    description: returns the list of drivers that are linked to this account
+    get:
+      tags: 
+        - drivers
+        - list
+      summary: get the list of drivers
+      description: the full list of drivers linked to this account
+      operationId: getDrivers
+      responses:
+        '200':
+          description: list of drivers
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Driver'
+      deprecated: false
+  /drivers/{driverID}:
+    summary: retrieve one driver
+    description: retrieve a driver based on his driverID
+    parameters:
+      - $ref: '#/components/parameters/driverIdParam'
+    get:
+      tags: 
+        - drivers
+        - CRUD
+      summary: return one driver
+      description: returns the information of a single driver
+      operationId: getDriverByDriverID
+      responses:
+        '200':
+          description: A driver object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+      deprecated: false
+    put: 
+      tags: 
+        - drivers
+        - CRUD
+      summary: update a driver
+      description: Updates a single driver
+      operationId: updateDriverByDriverID
+      responses:
+        '200':
+          description: A driver object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+      deprecated: false
+    delete:
+      tags: 
+        - drivers
+        - CRUD
+      summary: delete a driver
+      description: deletes a single driver
+      operationId: deleteDriverByDriverID
+      responses:
+        '200':
+          description: A driver object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+      deprecated: false
+  /trailers:
+    summary: list of trailers
+    description: returns the list of trailers that are linked to this account
+    get:
+      tags: 
+        - trailers
+        - list
+      summary: get the list of trailers
+      description: the full list of trailers linked to this account
+      operationId: getTrailers
+      responses:
+        '200':
+          description: list of trailers
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trailer'
+      deprecated: false
+  /trailers/{trailerID}:
+    summary: retrieve one trailer
+    description: retrieve a trailer based on his trailerID
+    parameters:
+      - $ref: '#/components/parameters/trailerIdParam'
+    get:
+      tags: 
+        - trailers
+        - CRUD
+      summary: return one trailer
+      description: returns the information of a single trailer
+      operationId: getTrailerByTrailerID
+      responses:
+        '200':
+          description: A trailer object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trailer'
+      deprecated: false
+    put: 
+      tags: 
+        - trailers
+        - CRUD
+      summary: update a trailer
+      description: Updates a single trailer
+      operationId: updateTrailerByTrailerID
+      responses:
+        '200':
+          description: A trailer object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trailer'
+      deprecated: false
+    delete:
+      tags: 
+        - trailers
+        - CRUD
+      summary: delete a trailer
+      description: deletes a single trailer
+      operationId: deleteTrailerByTrailerID
+      responses:
+        '200':
+          description: A trailer object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trailer'
+      deprecated: false
+  /vehicles/{vehicleID}/history:
+    summary: historical vehicle data
+    description: search throught the historical data (postions, mileage, sensors) of a vehicle based on his vehicleID, add parameters to include extra sensor information
+    parameters:
+      - $ref: '#/components/parameters/vehicleIdParam'
+      - $ref: '#/components/parameters/fromParam'
+      - $ref: '#/components/parameters/untilParam'
+      - $ref: '#/components/parameters/sensorParam'
+    get:
+      tags: 
+        - vehicles
+        - history
+      summary: historical vehicle data
+      description: search throught the historical data of a vehicle based on his vehicleID, add parameters to include extra sensor information
+      operationId: getHistoricalVehicleData
+      responses:
+        '200':
+          description: An array of historical vehicle information
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicleID: 
+                    type: string
+                  historyItems:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/HistoryItem"
+      deprecated: false
+  /trailer/{trailerID}/history:
+    summary: historical trailer data
+    description: search throught the historical data (postions, mileage, sensors) of a trailer based on his trailerID, add parameters to include extra sensor information
+    parameters:
+      - $ref: '#/components/parameters/trailerIdParam'
+      - $ref: '#/components/parameters/fromParam'
+      - $ref: '#/components/parameters/untilParam'
+      - $ref: '#/components/parameters/sensorParam'
+    get:
+      tags: 
+        - trailers
+        - history
+      summary: historical trailer data
+      description: search throught the historical data of a trailer based on his trailerID, add parameters to include extra sensor information
+      operationId: getHistoricalTrailerData
+      responses:
+        '200':
+          description: An array of historical trailer information
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trailerID: 
+                    type: string
+                  historyItems:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/HistoryItem"
+      deprecated: false
+
+  /vehicles/{vehicleID}/state:
+    summary: current vehicle state
+    description: get the current vehicle information like postions, mileage, sensors of a vehicle based on his vehicleID, add parameters to include extra sensor information
+    parameters:
+      - $ref: '#/components/parameters/vehicleIdParam'
+      - $ref: '#/components/parameters/sensorParam'
+    get:
+      tags: 
+        - vehicles
+        - state
+      summary: current vehicle state
+      description: get the current vehicle information like(postions, mileage, sensors) of a vehicle based on his vehicleID, add parameters to include extra sensor information
+      operationId: getVehicleState
+      responses:
+        '200':
+          description: A state object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicleID: 
+                    type: string
+                  currentState:
+                    $ref: "#/components/schemas/State"
+      deprecated: false
+      
+  /trailers/{trailerID}/state:
+    summary: current trailer state
+    description: get the current trailer information like(postions, mileage, sensors) of a trailer based on his trailerID, add parameters to include extra sensor information
+    parameters:
+      - $ref: '#/components/parameters/trailerIdParam'
+      - $ref: '#/components/parameters/sensorParam'
+    get:
+      tags: 
+        - trailers
+        - state
+      summary: current trailer state
+      description: get the current trailer information like(postions, mileage, sensors) of a trailer based on his trailerID, add parameters to include extra sensor information
+      operationId: getTrailerState
+      responses:
+        '200':
+          description: A state object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trailerID: 
+                    type: string
+                  currentState:
+                    $ref: "#/components/schemas/State"
+      deprecated: false
+  
+  /vehicles/{vehicleID}/events:
+    summary: get the vehicle events
+    description: get a historic overview of the vehicle events like alarms, planning feedback or tacho state changes of a vehicle based on his vehicleID
+    parameters:
+      - $ref: '#/components/parameters/vehicleIdParam'
+      - $ref: '#/components/parameters/fromParam'
+      - $ref: '#/components/parameters/untilParam'
+      - $ref: '#/components/parameters/sensorParam'    
+    get:
+      tags:
+        - vehicles
+        - events
+      summary: get the vehicle events
+      description: get a historic overview of the vehicle events like alarms, planning feedback or tacho state changes of a vehicle based on his vehicleID
+      operationId: getVehicleEvents
+      responses:
+        '200':
+          description: An array of event object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicleID: 
+                    type: string
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+      deprecated: false
+      
+  /trailers/{trailerID}/events:
+    summary: get the trailer events
+    description: get a historic overview of the trailer events like alarms, planning feedback or tacho state changes of a trailer based on his trailerID
+    parameters:
+      - $ref: '#/components/parameters/trailerIdParam'
+      - $ref: '#/components/parameters/fromParam'
+      - $ref: '#/components/parameters/untilParam'
+      - $ref: '#/components/parameters/sensorParam'    
+    get:
+      tags:
+        - trailers
+        - events
+      summary: get the trailer events
+      description: get a historic overview of the trailer events like alarms, planning feedback or tacho state changes of a trailer based on his trailerID
+      operationId: getTrailerEvents
+      responses:
+        '200':
+          description: An array of event object
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trailerID: 
+                    type: string
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+      deprecated: false  

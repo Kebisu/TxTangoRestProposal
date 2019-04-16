@@ -1,5 +1,5 @@
 {
-  "name": "lucybot-documentation-starter",
+  "name": "TxTangoRestProposal",
   "version": "1.0.1",
   "description": "Customizable Documentation for REST APIs",
   "main": "index.html",
@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LucyBot-Inc/documentation-starter.git"
+    "url": "git+https://github.com/Kebisu/TxTangoRestProposal.git"
   },
-  "author": "LucyBot, Inc.",
+  "author": "Wabco",
   "bugs": {
-    "url": "https://github.com/LucyBot-Inc/documentation-starter/issues"
+    "url": "https://github.com/Kebisu/TxTangoRestProposal/issues"
   },
-  "homepage": "https://github.com/LucyBot-Inc/documentation-starter#readme"
+  "homepage": "https://github.com/Kebisu/TxTangoRestProposal#readme"
 }
